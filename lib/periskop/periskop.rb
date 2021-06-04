@@ -1,4 +1,3 @@
-# encoding: UTF-8
-
+# Periskop module
 module Periskop
 end
