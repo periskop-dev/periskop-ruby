@@ -29,6 +29,8 @@ module Periskop
     end
 
     class HTTPContext
+      attr_accessor :request_method
+
       def initialize(request_method, request_url, request_headers, request_body)
         @request_method = request_method
         @request_url = request_url
@@ -38,6 +40,8 @@ module Periskop
     end
 
     class ExceptionWithContext
+      attr_accessor :exception_instance, :http_context
+
       NUM_HASH_CHARS = 8
       MAX_TRACES = 5
 
