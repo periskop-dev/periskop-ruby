@@ -87,9 +87,28 @@ module Periskop
 
       def as_json(_options = {})
         {
+          aggregation_key: @aggregation_key,
           total_count: @total_count,
           severity: @severity,
           latest_errors: @latest_errors
+        }
+      end
+
+      def to_json(*options)
+        as_json(*options).to_json(*options)
+      end
+    end
+
+    class Payload
+      def initialize(aggregated_errors, target_uuid)
+        @aggregated_errors = aggregated_errors
+        @target_uuid = target_uuid
+      end
+
+      def as_json(_options = {})
+        {
+          aggregated_errors: @aggregated_errors,
+          target_uuid: @target_uuid
         }
       end
 

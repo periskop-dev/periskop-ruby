@@ -1,15 +1,17 @@
 require 'periskop/client/models'
 require 'json'
+require 'securerandom'
 
 module Periskop
   module Client
     class ExceptionCollector
       def initialize
         @aggregated_exceptions = {}
+        @uuid = SecureRandom.uuid
       end
 
       def aggregated_exceptions
-        puts @aggregated_exceptions.to_json
+        Payload.new(@aggregated_exceptions.values, @uuid)
       end
 
       # Report an exception
