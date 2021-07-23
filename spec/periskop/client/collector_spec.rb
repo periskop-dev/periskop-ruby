@@ -6,8 +6,8 @@ describe Periskop::Client::ExceptionCollector do
 
   describe '#report' do
     before do
-      raise Exception
-    rescue Exception => e
+      raise StandardError
+    rescue StandardError => e
       collector.report(e)
     end
 
@@ -16,14 +16,16 @@ describe Periskop::Client::ExceptionCollector do
     end
 
     it 'has the valid exception name' do
-      expect(collector.aggregated_exceptions_dict.values[0].latest_errors[0].exception_instance.class).to eq('Exception')
+      expect(
+        collector.aggregated_exceptions_dict.values[0].latest_errors[0].exception_instance.class
+      ).to eq('StandardError')
     end
   end
 
   describe '#report_with_context' do
     before do
-      raise Exception
-    rescue Exception => e
+      raise StandardError
+    rescue StandardError => e
       http_context = Periskop::Client::HTTPContext.new('GET', 'http://example.com', nil, '{}')
       collector.report_with_context(e, http_context)
     end
