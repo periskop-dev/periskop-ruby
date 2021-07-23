@@ -57,8 +57,6 @@ describe Periskop::Client::Exporter do
 HEREDOC
       exported_json = JSON.parse(exporter.export)
       exported_json['aggregated_errors'][0]['latest_errors'][0]['error']['stacktrace'] = ''
-      #exported_json['aggregated_errors'][0]['created_at'] = '2019-10-11T12:47:25.595Z'
-      #exported_json['aggregated_errors'][0]['latest_errors'][0]['timestamp'] = '2019-10-11T12:47:25.595Z'
       exported_json['aggregated_errors'][0]['latest_errors'][0]['uuid'] = '5d9893c6-51d6-11ea-8aad-f894c260afe5'
       exported_json['target_uuid'] = '5d9893c6-51d6-11ea-8aad-f894c260afe5'
       expect(exported_json).to eq(JSON.parse(expected_json))
