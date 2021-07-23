@@ -52,5 +52,5 @@ puts(exporter.export)
 
 ### Run tests
 
-1. `gem install rspec`
+1. `gem install rspec timecop`
 2. `rspec`

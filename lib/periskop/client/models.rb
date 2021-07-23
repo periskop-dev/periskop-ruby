@@ -42,6 +42,19 @@ module Periskop
         @request_headers = request_headers
         @request_body = request_body
       end
+
+      def as_json(_options = {})
+        {
+          request_method: @request_method,
+          request_url: @request_url,
+          request_headers: @request_headers,
+          request_body: @request_body
+        }
+      end
+
+      def to_json(*options)
+        as_json(*options).to_json(*options)
+      end
     end
 
     # ExceptionWithContext represents a reported exception with HTTP context
@@ -92,6 +105,7 @@ module Periskop
         @latest_errors = []
         @total_count = 0
         @severity = severity
+        @created_at = Time.now.utc.iso8601
       end
 
       # Add exception to the list of latest errors up to MAX_ERRORS
@@ -106,6 +120,7 @@ module Periskop
       def as_json(_options = {})
         {
           aggregation_key: @aggregation_key,
+          created_at: @created_at,
           total_count: @total_count,
           severity: @severity,
           latest_errors: @latest_errors
