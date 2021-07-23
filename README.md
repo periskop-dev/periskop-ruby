@@ -1,7 +1,7 @@
 # periskop-ruby
 Ruby client for Periskop
 
-### Contributing
+## Setup
 
 With the gemspec file in the root directory of the repository, we can locally build a gem from its source code to test it out.
 
@@ -25,7 +25,32 @@ $ irb
 => true
 ```
 
-### Test
+## Usage example
+
+```ruby
+require 'periskop/client/collector'
+require 'periskop/client/exporter'
+require 'periskop/client/models'
+
+collector = Periskop::Client::ExceptionCollector.new
+exporter = Periskop::Client::Exporter.new(collector)
+
+def div
+  1 / 0
+end
+
+begin
+  div
+rescue Exception => e
+  collector.report(e)
+  http_context = Periskop::Client::HTTPContext.new('GET', 'http://example.com', nil, '{}')
+  collector.report_with_context(e, http_context)
+end
+
+puts(exporter.export)
+```
+
+### Run tests
 
 1. `gem install rspec`
 2. `rspec`
