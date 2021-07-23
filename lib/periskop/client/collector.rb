@@ -44,14 +44,14 @@ module Periskop
         exception_with_context = ExceptionWithContext.new(
           exception_instance,
           context,
-          'error'
+          Periskop::Client::SEVERITY_ERROR
         )
         aggregation_key = exception_with_context.aggregation_key()
 
         unless @aggregated_exceptions_dict.key?(aggregation_key)
           aggregated_exception = AggregatedException.new(
             aggregation_key,
-            'error'
+            Periskop::Client::SEVERITY_ERROR
           )
           @aggregated_exceptions_dict.store(aggregation_key, aggregated_exception)
         end

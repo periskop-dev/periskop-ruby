@@ -4,6 +4,9 @@ require 'digest'
 
 module Periskop
   module Client
+    SEVERITY_INFO = "info"
+    SEVERITY_WARNING = "warning"
+    SEVERITY_ERROR = "error"
     # ExceptionInstance has all metadata of a reported exception
     class ExceptionInstance
       attr_accessor :class, :message, :stacktrace, :cause
@@ -80,7 +83,9 @@ module Periskop
 
     # AggregatedException represents the aggregation of a group of exceptions
     class AggregatedException
-      attr_accessor :latest_errors
+      attr_accessor :latest_errors, :total_count
+
+      MAX_ERRORS = 10
 
       def initialize(aggregation_key, severity)
         @aggregation_key = aggregation_key
@@ -91,6 +96,9 @@ module Periskop
 
       # Add exception to the list of latest errors up to MAX_ERRORS
       def add_exception(exception_with_context)
+        if @latest_errors.size >= MAX_ERRORS
+          @latest_errors.shift
+        end
         @latest_errors.push(exception_with_context)
         @total_count += 1
       end
