@@ -4,6 +4,7 @@ require 'securerandom'
 
 module Periskop
   module Client
+    # ExceptionCollector collects reported exceptions and aggregates them
     class ExceptionCollector
       def initialize
         @aggregated_exceptions_dict = {}

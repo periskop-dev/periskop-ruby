@@ -4,6 +4,7 @@ require 'digest'
 
 module Periskop
   module Client
+    # ExceptionInstance has all metadata of a reported exception
     class ExceptionInstance
       attr_accessor :class, :message, :stacktrace, :cause
 
@@ -28,6 +29,7 @@ module Periskop
       end
     end
 
+    # HTTPContext represents data from HTTP context of an exception
     class HTTPContext
       attr_accessor :request_method
 
@@ -39,6 +41,7 @@ module Periskop
       end
     end
 
+    # ExceptionWithContext represents a reported exception with HTTP context
     class ExceptionWithContext
       attr_accessor :exception_instance, :http_context
 
@@ -53,6 +56,7 @@ module Periskop
         @timestamp = Time.now.utc.iso8601
       end
 
+      # Generates the aggregation key with a hash using the last MAX_TRACES
       def aggregation_key
         stacktrace_head = @exception_instance.stacktrace.first(MAX_TRACES).join('')
         error_hash = Digest::MD5.hexdigest(stacktrace_head)[0..NUM_HASH_CHARS - 1]
@@ -74,6 +78,7 @@ module Periskop
       end
     end
 
+    # AggregatedException represents the aggregation of a group of exceptions
     class AggregatedException
       attr_accessor :latest_errors
 
@@ -84,6 +89,7 @@ module Periskop
         @severity = severity
       end
 
+      # Add exception to the list of latest errors up to MAX_ERRORS
       def add_exception(exception_with_context)
         @latest_errors.push(exception_with_context)
         @total_count += 1
@@ -103,6 +109,7 @@ module Periskop
       end
     end
 
+    # Payload represents the aggregated structure of errors
     class Payload
       def initialize(aggregated_errors, target_uuid)
         @aggregated_errors = aggregated_errors

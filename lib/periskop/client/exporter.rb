@@ -1,5 +1,6 @@
 module Periskop
   module Client
+    # Exporter exposes in json format all collected exceptions from the specified `collector`
     class Exporter
       def initialize(collector)
         @collector = collector
