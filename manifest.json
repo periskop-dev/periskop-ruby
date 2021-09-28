@@ -1,0 +1,9 @@
+{
+	"_schema": "soundcloud/applicationmanifest/v1",
+	"name": "periskop-ruby",
+	"description": "Ruby client for Periskop",
+	"owner": "core-clients-team",
+	"type":"tool",
+	"status":"production",
+	"dependencies": []
+}
