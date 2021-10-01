@@ -1,0 +1,17 @@
+container:
+  image: ruby:latest
+
+task:
+  name: RSpec
+  bundle_cache:
+    folder: /usr/local/bundle
+    fingerprint_script:
+      - echo $RUBY_VERSION
+      - cat Gemfile.lock
+    populate_script: make prepare
+  script: make test-ci
+  always:
+    rspec_artifacts:
+      path: rspec.json
+      type: text/json
+      format: rspec

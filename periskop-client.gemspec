@@ -5,5 +5,5 @@ Gem::Specification.new do |s|
   s.description = "Periskop client for Ruby"
   s.authors     = ['Julio Zynger', 'Marc Tuduri']
   s.files       = Dir.glob('{lib/**/*}')
-  s.license     = 'MIT'
+  s.license     = 'Apache'
 end
