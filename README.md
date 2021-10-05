@@ -1,4 +1,7 @@
 # periskop-ruby
+
+[![Build Status](https://api.cirrus-ci.com/github/soundcloud/periskop-ruby.svg)](https://cirrus-ci.com/github/soundcloud/periskop-ruby)
+
 Ruby client for Periskop.
 
 ## Setup
