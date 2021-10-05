@@ -1,5 +1,5 @@
 # periskop-ruby
-Ruby client for Periskop
+Ruby client for Periskop.
 
 ## Setup
 
