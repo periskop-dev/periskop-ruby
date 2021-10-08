@@ -5,6 +5,3 @@ prepare:
 
 test:
 	bundle exec rspec
-
-test-ci:
-	bundle exec rspec

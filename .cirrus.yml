@@ -9,9 +9,4 @@ task:
       - echo $RUBY_VERSION
       - cat Gemfile.lock
     populate_script: make prepare
-  script: make test-ci
-  always:
-    rspec_artifacts:
-      path: rspec.json
-      type: text/json
-      format: rspec
+  script: make test
