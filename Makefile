@@ -7,4 +7,4 @@ test:
 	bundle exec rspec
 
 test-ci:
-	bundle exec rspec --format json --out rspec.json
+	bundle exec rspec
