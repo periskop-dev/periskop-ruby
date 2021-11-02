@@ -27,8 +27,6 @@ module Periskop
       end
     end
 
-    private
-
     # Web framework middlewares often store rescued exceptions inside the
     # Rack env, but Rack doesn't have a standard key for it:
     #
