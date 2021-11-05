@@ -16,7 +16,7 @@ module Periskop
         begin
           response = @app.call(env)
         rescue Exception => ex
-          report_push(ex)
+          report_push(env, ex)
           raise(ex)
         end
 
@@ -54,6 +54,7 @@ module Periskop
           CONTENT_TYPE
           CONTENT_LENGTH
         ].freeze
+        headers = {}
 
         request_env.map.with_object({}) do |(key, value), headers|
           if header_prefixes.any? { |prefix| key.to_s.start_with?(prefix) }
@@ -66,7 +67,6 @@ module Periskop
 
       def get_http_context(env)
         request = find_request(env)
-
         Periskop::Client::HTTPContext.new(request.request_method, request.url, get_http_headers(request.env), nil)
       end
 
@@ -77,8 +77,7 @@ module Periskop
           else
             RuntimeError.new(maybe_ex.to_s)
           end
-
-        @collector.report_with_context(env, ex)
+        @collector.report_with_context(ex, get_http_context(env))
         @exporter.push_to_gateway(@pushgateway_address)
       end
     end

@@ -26,7 +26,7 @@ describe Periskop::Client::Exporter do
         "target_uuid": "5d9893c6-51d6-11ea-8aad-f894c260afe5",
         "aggregated_errors": [
           {
-            "aggregation_key": "StandardError@cfbf9f17",
+            "aggregation_key": "StandardError@138b8e97",
             "total_count": 1,
             "severity": "error",
             "created_at": "2019-10-11T12:47:25Z",
