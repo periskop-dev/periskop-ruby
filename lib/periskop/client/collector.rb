@@ -39,7 +39,7 @@ module Periskop
           exception.class.name,
           exception.message,
           exception.backtrace,
-          exception.cause
+          nil #exception.cause
         )
         exception_with_context = ExceptionWithContext.new(
           exception_instance,
