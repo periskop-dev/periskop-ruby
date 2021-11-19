@@ -20,13 +20,21 @@ describe Periskop::Client::Exporter do
       end
     end
 
+    def get_aggregation_hash()
+      if RUBY_VERSION < '3.0'
+        'cfbf9f17'
+      else
+        '138b8e97'
+      end
+    end
+
     it 'exports to the expected format' do
       expected_json = <<HEREDOC
       {
         "target_uuid": "5d9893c6-51d6-11ea-8aad-f894c260afe5",
         "aggregated_errors": [
           {
-            "aggregation_key": "StandardError@138b8e97",
+            "aggregation_key": "StandardError@#{get_aggregation_hash()}",
             "total_count": 1,
             "severity": "error",
             "created_at": "2019-10-11T12:47:25Z",

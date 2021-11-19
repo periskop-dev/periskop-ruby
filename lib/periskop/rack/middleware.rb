@@ -5,6 +5,8 @@ require 'periskop/client/models'
 module Periskop
   module Rack
     class Middleware
+      attr_accessor :collector
+
       def initialize(app, options = {})
         @app = app
         @pushgateway_address = options.fetch(:pushgateway_address)
@@ -25,7 +27,8 @@ module Periskop
 
         response
       end
-
+      
+      private
       # Web framework middlewares often store rescued exceptions inside the
       # Rack env, but Rack doesn't have a standard key for it:
       #
