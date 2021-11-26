@@ -1,6 +1,6 @@
 require 'rack'
 require 'periskop/rack/middleware'
-#require 'webmock/rspec'
+require 'webmock/rspec'
 
 describe Periskop::Rack::Middleware do
   class App
@@ -10,7 +10,7 @@ describe Periskop::Rack::Middleware do
   end
 
   let :middleware do
-    #stub_request(:post, 'http://localhost:7878/errors')
+    stub_request(:post, 'http://localhost:7878/errors')
     Periskop::Rack::Middleware.new(App.new, pushgateway_address: 'http://localhost:7878')
   end
 

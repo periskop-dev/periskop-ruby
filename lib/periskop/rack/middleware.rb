@@ -27,8 +27,9 @@ module Periskop
 
         response
       end
-      
+
       private
+
       # Web framework middlewares often store rescued exceptions inside the
       # Rack env, but Rack doesn't have a standard key for it:
       #
@@ -57,15 +58,13 @@ module Periskop
           CONTENT_TYPE
           CONTENT_LENGTH
         ].freeze
-        headers = {}
 
         request_env.map.with_object({}) do |(key, value), headers|
           if header_prefixes.any? { |prefix| key.to_s.start_with?(prefix) }
             headers[key] = value
           end
+          headers
         end
-
-        headers
       end
 
       def get_http_context(env)
