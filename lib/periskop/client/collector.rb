@@ -39,7 +39,7 @@ module Periskop
           exception.class.name,
           exception.message,
           exception.backtrace,
-          exception.cause
+          get_cause(exception)
         )
         exception_with_context = ExceptionWithContext.new(
           exception_instance,
@@ -57,6 +57,14 @@ module Periskop
         end
         aggregated_exception = @aggregated_exceptions_dict[aggregation_key]
         aggregated_exception.add_exception(exception_with_context)
+      end
+
+      def get_cause(exception)
+        if RUBY_VERSION > '2.0'
+          return exception.cause
+        end
+
+        nil
       end
     end
   end
