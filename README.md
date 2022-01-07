@@ -55,7 +55,7 @@ puts(exporter.export)
 
 ## Use a Rack middleware
 
-You can use this library as a [Rack](https://github.com/rack/rack) middleware, that allow us you to capture any error happening during the life of a request. You need to use it with an instance of a [pushgateway](https://github.com/soundcloud/periskop-pushgateway/).
+You can use this library as a [Rack](https://github.com/rack/rack) middleware, that allow us you to capture any error happening during the life of a request. You need to use it with an instance of a [pushgateway](https://github.com/periskop-dev/periskop-pushgateway/).
 
 ```ruby
 require 'periskop/rack/middleware'
