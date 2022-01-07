@@ -11,7 +11,8 @@ describe Periskop::Rack::Middleware do
 
   let :middleware do
     stub_request(:post, 'http://localhost:7878/errors')
-    Periskop::Rack::Middleware.new(App.new, pushgateway_address: 'http://localhost:7878')
+    collector = Periskop::Client::ExceptionCollector.new
+    Periskop::Rack::Middleware.new(App.new, pushgateway_address: 'http://localhost:7878', collector: collector)
   end
 
   it 'captures exception on error' do

@@ -10,8 +10,13 @@ module Periskop
       def initialize(app, options = {})
         @app = app
         @pushgateway_address = options.fetch(:pushgateway_address)
-        @collector = Periskop::Client::ExceptionCollector.new
-        @exporter = Periskop::Client::Exporter.new(@collector)
+        options[:collector] ||= Periskop::Client::ExceptionCollector.new
+        @collector = options.fetch(:collector)
+
+        @exporter =
+          if @pushgateway_address
+            @exporter = Periskop::Client::Exporter.new(@collector)
+          end
       end
 
       def call(env)
@@ -80,7 +85,7 @@ module Periskop
             RuntimeError.new(maybe_ex.to_s)
           end
         @collector.report_with_context(ex, get_http_context(env))
-        @exporter.push_to_gateway(@pushgateway_address)
+        @exporter&.push_to_gateway(@pushgateway_address)
       end
     end
   end
