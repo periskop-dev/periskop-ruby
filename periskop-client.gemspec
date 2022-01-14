@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'periskop-client'
-  s.version     = '0.0.1'
+  s.version     = '0.1.0'
   s.summary     = 'Periskop client for Ruby'
   s.description = "Periskop client for Ruby"
   s.authors     = ['Julio Zynger', 'Marc Tuduri']
