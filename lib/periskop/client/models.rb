@@ -18,6 +18,25 @@ module Periskop
         @cause = cause
       end
 
+      def self.from_exception(exception)
+        ExceptionInstance.new(
+          exception.class.name,
+          exception.message,
+          exception.backtrace,
+          get_cause(exception)
+        )
+      end
+
+      def self.get_cause(exception)
+        if RUBY_VERSION > '2.0'
+          if exception.cause.is_a?(Exception)
+            return ExceptionInstance.from_exception(exception.cause)
+          end
+        end
+
+        nil
+      end
+
       def as_json(_options = {})
         {
           class: @class,

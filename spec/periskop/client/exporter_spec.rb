@@ -8,10 +8,16 @@ describe Periskop::Client::Exporter do
   let(:collector) { Periskop::Client::ExceptionCollector.new }
   let(:exporter) { Periskop::Client::Exporter.new(collector) }
 
+  def fail_and_reraise
+    raise StandardError
+  rescue
+    raise RuntimeError
+  end
+
   describe '#export' do
     before do
-      raise StandardError
-    rescue StandardError => e
+      fail_and_reraise
+    rescue RuntimeError => e
       http_context = Periskop::Client::HTTPContext.new(
         'GET', 'http://example.com', { 'Cache-Control': 'no-cache' }, nil
       )
@@ -22,7 +28,7 @@ describe Periskop::Client::Exporter do
 
     def get_aggregation_hash()
       if RUBY_VERSION < '3.0'
-        'cfbf9f17'
+        '73ab1734'
       else
         '138b8e97'
       end
@@ -34,17 +40,22 @@ describe Periskop::Client::Exporter do
         "target_uuid": "5d9893c6-51d6-11ea-8aad-f894c260afe5",
         "aggregated_errors": [
           {
-            "aggregation_key": "StandardError@#{get_aggregation_hash()}",
+            "aggregation_key": "RuntimeError@#{get_aggregation_hash()}",
             "total_count": 1,
             "severity": "error",
             "created_at": "2019-10-11T12:47:25Z",
             "latest_errors": [
               {
                 "error": {
-                  "class": "StandardError",
-                  "message": "StandardError",
+                  "class": "RuntimeError",
+                  "message": "RuntimeError",
                   "stacktrace": "",
-                  "cause": null
+                  "cause":  {
+                    "class": "StandardError",
+                    "message": "StandardError",
+                    "stacktrace": "",
+                    "cause": null
+                  }
                 },
                 "uuid": "5d9893c6-51d6-11ea-8aad-f894c260afe5",
                 "timestamp": "2019-10-11T12:47:25Z",
@@ -65,6 +76,7 @@ describe Periskop::Client::Exporter do
 HEREDOC
       exported_json = JSON.parse(exporter.export)
       exported_json['aggregated_errors'][0]['latest_errors'][0]['error']['stacktrace'] = ''
+      exported_json['aggregated_errors'][0]['latest_errors'][0]['error']['cause']['stacktrace'] = ''
       exported_json['aggregated_errors'][0]['latest_errors'][0]['uuid'] = '5d9893c6-51d6-11ea-8aad-f894c260afe5'
       exported_json['target_uuid'] = '5d9893c6-51d6-11ea-8aad-f894c260afe5'
       expect(exported_json).to eq(JSON.parse(expected_json))
