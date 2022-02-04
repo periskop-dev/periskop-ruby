@@ -1,6 +1,7 @@
 # periskop-ruby
 
 [![Build Status](https://api.cirrus-ci.com/github/periskop-dev/periskop-ruby.svg)](https://cirrus-ci.com/github/periskop-dev/periskop-ruby)
+[![Gem Version](https://badge.fury.io/rb/periskop-client.svg)](https://badge.fury.io/rb/periskop-client)
 
 Ruby client for Periskop.
 
