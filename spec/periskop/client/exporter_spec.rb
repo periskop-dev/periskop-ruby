@@ -30,7 +30,7 @@ describe Periskop::Client::Exporter do
       if RUBY_VERSION < '3.0'
         '73ab1734'
       else
-        '138b8e97'
+        '784c73c3'
       end
     end
 
