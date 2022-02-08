@@ -22,6 +22,22 @@ describe Periskop::Client::ExceptionCollector do
     end
   end
 
+  describe '#report manual error' do
+    before do
+      collector.report(RuntimeError.new('new error'))
+    end
+
+    it 'adds the exception to hash of exceptions' do
+      expect(collector.aggregated_exceptions_dict.size).to eq(1)
+    end
+
+    it 'has the valid exception name' do
+      expect(
+        collector.aggregated_exceptions_dict.values[0].latest_errors[0].exception_instance.class
+      ).to eq('RuntimeError')
+    end
+  end
+
   describe '#report_with_context' do
     before do
       raise StandardError

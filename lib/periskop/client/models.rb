@@ -22,7 +22,7 @@ module Periskop
         ExceptionInstance.new(
           exception.class.name,
           exception.message,
-          exception.backtrace,
+          get_backtrace(exception),
           get_cause(exception)
         )
       end
@@ -35,6 +35,14 @@ module Periskop
         end
 
         nil
+      end
+
+      def self.get_backtrace(exception)
+        if !exception.backtrace.nil?
+          exception.backtrace
+        else
+          caller
+        end
       end
 
       def as_json(_options = {})
