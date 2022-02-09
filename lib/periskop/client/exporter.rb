@@ -14,11 +14,13 @@ module Periskop
       end
 
       def push_to_gateway(addr)
-        uri = URI.parse("#{addr}/errors")
-        http = Net::HTTP.new(uri.host, uri.port)
-        request = Net::HTTP::Post.new(uri.request_uri, 'Content-Type' => 'application/json')
-        request.body = export
-        http.request(request)
+        if !addr.nil? && !addr.empty?
+          uri = URI.parse("#{addr}/errors")
+          http = Net::HTTP.new(uri.host, uri.port)
+          request = Net::HTTP::Post.new(uri.request_uri, 'Content-Type' => 'application/json')
+          request.body = export
+          http.request(request)
+        end
       end
     end
   end
