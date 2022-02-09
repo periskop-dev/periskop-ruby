@@ -9,12 +9,12 @@ module Periskop
 
       def initialize(app, options = {})
         @app = app
-        @pushgateway_address = options.fetch(:pushgateway_address)
+        @pushgateway_address = options.fetch(:pushgateway_address, nil)
         options[:collector] ||= Periskop::Client::ExceptionCollector.new
         @collector = options.fetch(:collector)
 
         @exporter =
-          if @pushgateway_address
+          unless @pushgateway_address.nil? || @pushgateway_address.empty?
             @exporter = Periskop::Client::Exporter.new(@collector)
           end
       end
